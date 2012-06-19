@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# the default number of domain roots to be removed
+NUM_REMOVED_ROOTS = 6
+
 import tornado.web
 import tornado.ioloop
 import tornado.httpclient
@@ -9,6 +12,7 @@ import tornado.httpclient
 #)
 
 #from pprint import pprint
+
 
 disallowed_response_headers = frozenset([
     'connection',
@@ -28,7 +32,14 @@ disallowed_response_headers = frozenset([
 class ProxyHandler(tornado.web.RequestHandler):
     SUPPORTED_METHODS = ['GET', 'POST']
 
-    def handle_response(self, response):
+    def _get_real_domain(self, num_removed_roots=NUM_REMOVED_ROOTS):
+        # e.g., httpbin.org.127.0.0.1.xip.io will return httpbin.org
+        d = self.request.host
+        l = d.split('.')
+        assert len(l) > num_removed_roots
+        return '.'.join(l[:(-num_removed_roots)])
+
+    def _handle_response(self, response):
         self.set_status(response.code)
 
         #print
@@ -57,16 +68,20 @@ class ProxyHandler(tornado.web.RequestHandler):
         self.finish()
 
     @tornado.web.asynchronous
-    def get(self):
-        headers = {h: v for (h, v) in self.request.headers.items() \
-                if not h.lower().startswith('proxy')
-        }
+    def get(self, uri):
+        real_domain = self._get_real_domain()
+        real_url = 'http://' + real_domain + uri
+        print real_domain
+        print real_url
+
+        headers = self.request.headers
+        if 'Host' in headers:
+            headers['Host'] = real_domain
 
         http_req = tornado.httpclient.HTTPRequest(
-            url=self.request.uri,
+            url=real_url,
             method=self.request.method,
             body=self.request.body,
-            #headers=self.request.headers,
             headers=headers,
             follow_redirects=False,
             allow_nonstandard_methods=True
@@ -74,7 +89,7 @@ class ProxyHandler(tornado.web.RequestHandler):
 
         http_client = tornado.httpclient.AsyncHTTPClient()
         try:
-            http_client.fetch(http_req, self.handle_response)
+            http_client.fetch(http_req, self._handle_response)
 
         except tornado.httpclient.HTTPError, err:
             self.handle_response(err.response)
@@ -87,9 +102,14 @@ class ProxyHandler(tornado.web.RequestHandler):
     # def self.post() as self.get()
     post = get
 
-application = tornado.web.Application([(r'.*', ProxyHandler)], debug=True)
 
+application = tornado.web.Application(
+        [(r'(.*)', ProxyHandler)],
+        debug=True  # please set to false in production environments
+)
 
 if __name__ == "__main__":
+    print 'Open your browser and try to access'
+    print 'http://httpbin.org.127.0.0.1.xip.io:8888'
     application.listen(8888)
     tornado.ioloop.IOLoop.instance().start()
