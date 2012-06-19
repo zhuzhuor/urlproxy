@@ -1,6 +1,6 @@
 # proxy-on-name
 
-A proxy server by manipulating domain names, written based on non-blocking [Tornado](https://github.com/facebook/tornado).
+A proxy server by manipulating domain names, written based on the non-blocking [Tornado](https://github.com/facebook/tornado).
 
 For example, opening http://targetdomain.com.proxydomain.org/query you may access the real content at http://targetdomain.com/query.
 

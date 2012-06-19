@@ -71,8 +71,8 @@ class ProxyHandler(tornado.web.RequestHandler):
     def get(self, uri):
         real_domain = self._get_real_domain()
         real_url = 'http://' + real_domain + uri
-        print real_domain
-        print real_url
+        #print real_domain
+        #print real_url
 
         headers = self.request.headers
         if 'Host' in headers:
