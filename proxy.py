@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # the default number of domain roots to be removed
-NUM_REMOVED_ROOTS = 6
+NUM_REMOVED_ROOTS = 3
 
 import tornado.web
 import tornado.ioloop
@@ -34,7 +34,10 @@ class ProxyHandler(tornado.web.RequestHandler):
 
     def _get_real_domain(self, num_removed_roots=NUM_REMOVED_ROOTS):
         # e.g., httpbin.org.127.0.0.1.xip.io will return httpbin.org
-        d = self.request.host
+        d = self.request.host.split(':')[0]
+        if d.endswith('.127.0.0.1.xip.io'):
+            return d[:-17]
+
         l = d.split('.')
         assert len(l) > num_removed_roots
         return '.'.join(l[:(-num_removed_roots)])
