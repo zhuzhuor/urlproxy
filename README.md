@@ -4,7 +4,7 @@ A proxy server by manipulating domain names, written based on the non-blocking [
 
 For example, opening http://targetdomain.com.proxydomain.org/query you may access the real content at http://targetdomain.com/query.
 
-To test the functionality, you can run the script locally and open http://httpbin.org.127.0.0.1.xip.io:8888/get. (Thank 37signals for the great xip.io.)
+You can run the script locally and open http://httpbin.org.127.0.0.1.xip.io:8888/get to test. (Thank 37signals for the great xip.io.)
 ### License
 
     Copyright (C) 2012 Bo Zhu http://zhuzhu.org
