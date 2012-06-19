@@ -2,7 +2,7 @@
 
 A proxy server by manipulating domain names, written based on non-blocking [Tornado](https://github.com/facebook/tornado).
 
-For example, opening http://targetdomain.com.proxydomain.org/abc you may access the real content at http://targetdomain.com.
+For example, opening http://targetdomain.com.proxydomain.org/query you may access the real content at http://targetdomain.com/query.
 
 To test the functionality, you can run the script locally and open http://httpbin.org.127.0.0.1.xip.io:8888/get. (Thanks 37signals for the great xip.io.)
 
