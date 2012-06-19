@@ -20,7 +20,7 @@ disallowed_response_headers = frozenset([
     'transfer-encoding',
     'upgrade',
     # all above are hop-by-hop headers
-    'content-encoding',  # will cause errors
+    'content-encoding',  # may cause decoding errors
     'content-length',
 ])
 
@@ -39,8 +39,9 @@ class ProxyHandler(tornado.web.RequestHandler):
         for h in response.headers.keys():
             if h.lower() not in disallowed_response_headers:
                 list_values = response.headers.get_list(h)
-                # should always prefer set_header than add_header
-                # _clear_headers_for_304 doesn't work for _list_headers
+                # set_header should always be preferred
+                # using only add_header will cause some problems
+                # e.g. _clear_headers_for_304 doesn't work for _list_headers
                 if len(list_values) == 1:
                     #print h, list_values[0]
                     self.set_header(h, list_values[0])
