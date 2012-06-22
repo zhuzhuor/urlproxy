@@ -71,9 +71,9 @@ class ProxyHandler(tornado.web.RequestHandler):
         self.finish()
 
     @tornado.web.asynchronous
-    def get(self, uri):
+    def get(self):
         real_domain = self._get_real_domain()
-        real_url = 'http://' + real_domain + uri
+        real_url = 'http://' + real_domain + self.request.uri
         #print real_domain
         #print real_url
 
@@ -107,7 +107,7 @@ class ProxyHandler(tornado.web.RequestHandler):
 
 
 application = tornado.web.Application(
-        [(r'(.*)', ProxyHandler)],
+        [(r'.*', ProxyHandler)],
         debug=True  # please set to false in production environments
 )
 
