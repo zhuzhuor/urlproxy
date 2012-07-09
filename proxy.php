@@ -22,7 +22,7 @@ if (!$url) {
     exit(400);
 }
 
-if (substr($url, 0, len('http://')) !== 'http://')
+if (substr($url, 0, 7) !== 'http://')
     $url = base64_decode($url);
 
 
