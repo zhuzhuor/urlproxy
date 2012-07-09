@@ -38,7 +38,7 @@ $cookie = array();  // always send cookies
 foreach ($_COOKIE as $key => $value) {
     $cookie[] = $key . '=' . $value;
 }
-$cookie[] = SID;  // always send session
+// $cookie[] = SID;  // what's this? FIXME
 $cookie = implode('; ', $cookie);
 
 curl_setopt($ch, CURLOPT_COOKIE, $cookie);
