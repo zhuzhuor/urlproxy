@@ -1,13 +1,13 @@
 <?php
 
-// Proxy-on-Name PHP Version
+// A PHP version of urlproxy
 // Copyright (c) 2012 Bo Zhu http://zhuzhu.org
-// Licensed under the MIT license.
+// Licensed under the MIT license
 
 // Based on Simple PHP Proxy by Ben Alman
 // Project Home - http://benalman.com/projects/php-simple-proxy/
-// Copyright (c) 2010 "Cowboy" Ben Alman,
-// Dual licensed under the MIT and GPLv2 licenses.
+// Copyright (c) 2010 "Cowboy" Ben Alman
+// Dual licensed under the MIT and GPLv2 licenses
 // http://benalman.com/about/license/
 
 
