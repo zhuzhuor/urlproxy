@@ -1,6 +1,6 @@
-# urlproxy
+# urlproxy-node.js
 
-A proxy server by manipulating URLs, written based on the non-blocking [Tornado](https://github.com/facebook/tornado).
+A proxy server by manipulating URLs, written based on the non-blocking [node.js](http://nodejs.org).
 
 For example, opening http://targetdomain.com.proxydomain.org/query you may access the real content at http://targetdomain.com/query. You can run the script locally and open http://httpbin.org.127.0.0.1.xip.io:8888/get to test. (Thank 37signals for the great xip.io.)
 
