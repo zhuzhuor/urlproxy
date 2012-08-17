@@ -2,6 +2,8 @@
 
 A proxy server by manipulating URLs, written based on the non-blocking [Tornado](https://github.com/facebook/tornado).
 
+You can also check its [PHP version](https://github.com/zhuzhuor/urlproxy/tree/php) and [node.js version](https://github.com/zhuzhuor/urlproxy/tree/node.js).
+
 For example, opening http://targetdomain.com.proxydomain.org/query you may access the real content at http://targetdomain.com/query. You can run the script locally and open http://httpbin.org.127.0.0.1.xip.io:8888/get to test. (Thank 37signals for the great xip.io.)
 
 You can also put the target URL as a parameter of the request, such as http://127.0.0.1.xip.io:8888/?url=http://httpbin.org/get. If the target URL is somewhat complicated (having several query parameters concatenated with `&`), to avoid troubles the target URL can be encoded by base64. For example, to access http://httpbin.org/get?a=1&b=2, you can try http://127.0.0.1.xip.io:8888/?url=aHR0cDovL2h0dHBiaW4ub3JnL2dldD9hPTEmYj0y.
